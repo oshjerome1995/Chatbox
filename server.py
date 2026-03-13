@@ -1,4 +1,4 @@
-```python
+
 import os
 from flask import Flask, render_template, request, jsonify, send_from_directory
 from datetime import datetime
@@ -129,5 +129,4 @@ def uploaded_file(filename):
 if __name__ == "__main__":
     print("Starting FOMISHERS Chat with AI JOM via OpenRouter...")
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
-```
+    app.run(host="0.0.0.0", port=port,debug=True)
