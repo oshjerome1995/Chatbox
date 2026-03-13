@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOMISHERS Chat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="theme-light">
+
+<div class="container py-3">
+
+    <h2 class="text-center mb-3">FOMISHERS Chat</h2>
+    <div class="text-center mb-2">💡 Type JOM kung gusto nyo kausapin si JOM</div>
+
+    <!-- Theme Selector -->
+    <div class="mb-3 text-center">
+        <select id="themeSelector" class="form-select w-auto d-inline-block">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="pink">Pink</option>
+            <option value="purple">Purple</option>
+            <option value="blue">Blue</option>
+            <option value="yellow">Yellow</option>
+            <option value="green">Green</option>
+            <option value="red">Red</option>
+            <option value="orange">Orange</option>
+            <option value="teal">Teal</option>
+        </select>
+    </div>
+
+    <!-- Username Input -->
+    <div class="mb-3">
+        <input type="text" id="username" class="form-control" placeholder="Enter your name">
+    </div>
+
+    <!-- Chat Window -->
+    <div id="chatWindow" class="border rounded p-3 mb-3" style="height:400px; overflow-y:auto; background:#f8f9fa;"></div>
+
+    <!-- Message Form -->
+    <form id="chatForm">
+        <div class="input-group">
+            <input type="text" id="message" class="form-control" placeholder="Type a message..." required>
+            <input type="file" id="fileInput" class="form-control">
+            <button class="btn btn-primary" type="submit">Send</button>
+        </div>
+    </form>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

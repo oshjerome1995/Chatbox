@@ -1,0 +1,90 @@
+You are a senior full-stack engineer. I want you to **generate a complete, deployable web application** called **FOMISHERS Chat**. The app should be fully functional, runnable locally, and deployable online. Include **all files, folder structure, code, and instructions**.
+
+### Requirements:
+
+**Technologies:**
+- Backend: Python + Flask
+- Frontend: HTML, CSS, JavaScript
+- UI: Bootstrap for responsiveness
+- AI: OpenAI GPT or OpenRouter API (simulated fallback if quota/API fails)
+
+**Project structure:**
+/ai-jom-chat
+├─ server.py
+├─ /templates
+│  └─ index.html
+├─ /static
+│  ├─ style.css
+│  ├─ script.js
+│  └─ jom.jpg
+├─ /uploads
+
+**Features:**
+
+1. **User login**
+   - Input: "Enter your name" before chatting.
+
+2. **Chat system**
+   - Public group chat
+   - Scrollable chat window
+   - Timestamps
+   - Display sender name
+   - Everyone with the link can see messages
+
+3. **JOM AI**
+   - If a message contains “JOM”, call AI and respond as **JOM**.
+   - JOM personality: friendly, professional, tutor, creative, motivational, problem solver, etc.
+   - Use system prompt for AI: `"You are JOM. Friendly, professional, tutor, creative writer, problem solver. Always respond as JOM."`
+   - Use OpenAI GPT or OpenRouter free API. If API fails, return a simulated AI message.
+
+4. **Hint message**
+   - Show at top: "💡 Type JOM kung gusto nyo kausapin si JOM"
+
+5. **File upload**
+   - Supported files: jpg, jpeg, png → show image preview in chat
+   - Other files → show downloadable link
+
+6. **Responsive design**
+   - Use Bootstrap for desktop, tablet, mobile
+   - Chat interface resizes automatically
+
+7. **Themes**
+   - Dropdown for selecting theme: Light, Dark, Pink, Purple, Blue, Yellow, Green, Red, Orange, Teal
+   - Changing theme updates page colors instantly
+
+8. **Avatar**
+   - JOM messages show avatar (`jom.jpg`)
+
+9. **Chat interface**
+   - Message bubbles, usernames, scrollable window, responsive layout
+
+10. **Backend endpoints**
+    - `/` → serve chat page
+    - `/chat` → handle messages (process AI when needed)
+    - `/uploads/<filename>` → serve uploaded files
+    - `/messages` → return JSON of all messages
+
+11. **File uploads**
+    - Save files to `/uploads`
+    - Images render, other files show as links
+
+12. **Deployment instructions**
+    - Ready for Render, Railway, or any Python web host
+    - Include setup instructions:
+      - `pip install flask requests werkzeug`
+      - Set API key environment variable if using OpenAI/OpenRouter
+      - `python server.py`
+      - Open `http://localhost:5000`
+
+13. **Error handling**
+    - If AI API fails or quota exceeded, fallback to a **simulated JOM response** to keep chat working
+
+### Output required:
+- Full **server.py**
+- Full **index.html**
+- Full **script.js**
+- Full **style.css**
+- Folder structure as above
+- Instructions for running locally and deployment
+
+Make sure the output is **complete, clean, and runnable**.
