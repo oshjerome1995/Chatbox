@@ -1,3 +1,4 @@
+```python
 import os
 from flask import Flask, render_template, request, jsonify, send_from_directory
 from datetime import datetime
@@ -16,7 +17,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 # -----------------------------
 # OpenRouter API config
 # -----------------------------
-OPENROUTER_API_KEY = "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"
+OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY")
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 # -----------------------------
@@ -40,21 +41,25 @@ def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ["jpg", "jpeg", "png"]
 
 def jom_ai_response(user_message):
-    headers = {"Authorization": f"Bearer {OPENROUTER_API_KEY}"}
+    headers = {
+        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "Content-Type": "application/json"
+    }
+
     data = {
-        "model": "gpt-3.5-turbo",
+        "model": "openai/gpt-3.5-turbo",
         "messages": [
             {"role": "system", "content": JOM_PROMPT},
             {"role": "user", "content": user_message}
         ]
     }
+
     try:
         resp = requests.post(OPENROUTER_URL, json=data, headers=headers, timeout=15)
         resp.raise_for_status()
         return resp.json()["choices"][0]["message"]["content"]
     except Exception as e:
-        # Fallback if API fails
-        return f"JOM says (simulated): Sorry, AI is not available. {str(e)}"
+        return f"JOM says: Sorry, AI is not available. ({str(e)})"
 
 # -----------------------------
 # Routes
@@ -78,9 +83,10 @@ def chat():
     file_type = None
 
     if file and file.filename != "":
-        filename = secure_filename(file.filename)
+        filename = f"{datetime.now().timestamp()}_{secure_filename(file.filename)}"
         path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
         file.save(path)
+
         file_url = f"/uploads/{filename}"
         ext = filename.split(".")[-1].lower()
         file_type = "image" if ext in ["jpg", "jpeg", "png"] else "file"
@@ -94,10 +100,12 @@ def chat():
             "file_type": file_type,
             "is_jom": False
         }
+
         messages.append(msg_data)
 
         if message and "JOM" in message.upper():
             ai_reply = jom_ai_response(message)
+
             jom_msg = {
                 "username": "JOM",
                 "message": ai_reply,
@@ -106,6 +114,7 @@ def chat():
                 "file_type": None,
                 "is_jom": True
             }
+
             messages.append(jom_msg)
 
     return jsonify({"status": "ok"})
@@ -119,4 +128,6 @@ def uploaded_file(filename):
 # -----------------------------
 if __name__ == "__main__":
     print("Starting FOMISHERS Chat with AI JOM via OpenRouter...")
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
+```
